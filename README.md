@@ -1,7 +1,7 @@
-![Chrome Web Store](https://img.shields.io/chrome-web-store/users/ehnelgmlbdggjcjlnffknjdnnfpdchlm?label=Chrome%20users)
-![Mozilla Add-on](https://img.shields.io/amo/users/skola-online-prumer-znamek?label=Firefox%20Users)
 ![Chrome Web Store](https://img.shields.io/chrome-web-store/v/ehnelgmlbdggjcjlnffknjdnnfpdchlm?label=Version)
 ![Chrome Web Store](https://img.shields.io/chrome-web-store/rating/ehnelgmlbdggjcjlnffknjdnnfpdchlm?label=Rating)
+![Chrome Web Store](https://img.shields.io/chrome-web-store/users/ehnelgmlbdggjcjlnffknjdnnfpdchlm?label=Chrome%20users)
+![Mozilla Add-on](https://img.shields.io/amo/users/skola-online-prumer-znamek?label=Firefox%20Users)
 
 
 # Průměr známek
