@@ -1,3 +1,9 @@
+![Chrome Web Store](https://img.shields.io/chrome-web-store/users/ehnelgmlbdggjcjlnffknjdnnfpdchlm?label=Chrome%20users)
+![Mozilla Add-on](https://img.shields.io/amo/users/skola-online-prumer-znamek?label=Firefox%20Users)
+![Chrome Web Store](https://img.shields.io/chrome-web-store/v/ehnelgmlbdggjcjlnffknjdnnfpdchlm?label=Version)
+![Chrome Web Store](https://img.shields.io/chrome-web-store/rating/ehnelgmlbdggjcjlnffknjdnnfpdchlm?label=Rating)
+
+
 # Průměr známek
 ## Pro systémy Škola Online a DM Software
 
