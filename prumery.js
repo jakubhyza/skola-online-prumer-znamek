@@ -43,13 +43,16 @@ function ZobrazitPrumer()
 			if (x[0][y].innerHTML != 'Uz.')
 			{
 				let vaha = parseFloat(x[1][y].innerHTML);
-				let znamky = x[i][y].querySelectorAll('span');
-				
+				let title = x[i][y].title;
+				if (title == null || title.trim() == '')
+					continue
+				let znamky = title.trim().split(" ");
+
 				for (z = 0; z < znamky.length; z++)
 				{
-					if (znamky[z].innerHTML != '-' && znamky[z].innerHTML != null && znamky[z].innerHTML != '[S]')
-					{						
-						znamka += (parseFloat(znamky[z].innerHTML.replace('-','.5')) * vaha);
+					if (znamky[z] != '-' && znamky[z] != null && znamky[z] != '[S]')
+					{
+						znamka += (parseFloat(znamky[z].replace('-','.5')) * vaha);
 						temp += vaha;
 					}
 				}
