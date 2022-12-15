@@ -44,11 +44,12 @@ function ZobrazitPrumer()
 			{
 				let vaha = parseFloat(x[1][y].innerHTML);
 				let title = x[i][y].title;
-				if (title == null || title.trim() == '')
-					continue
 
 				// zpracovani znamek v "title" bunky
 				let znamky = title.trim().split(" ");
+
+				if (title == null || title.trim() == '')
+					znamky = [];
 
 				for (z = 0; z < znamky.length; z++)
 				{
