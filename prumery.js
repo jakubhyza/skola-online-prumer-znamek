@@ -46,6 +46,8 @@ function ZobrazitPrumer()
 				let title = x[i][y].title;
 				if (title == null || title.trim() == '')
 					continue
+
+				// zpracovani znamek v "title" bunky
 				let znamky = title.trim().split(" ");
 
 				for (z = 0; z < znamky.length; z++)
@@ -53,6 +55,18 @@ function ZobrazitPrumer()
 					if (znamky[z] != '-' && znamky[z] != null && znamky[z] != '[S]')
 					{
 						znamka += (parseFloat(znamky[z].replace('-','.5')) * vaha);
+						temp += vaha;
+					}
+				}
+
+				// zpracovani simulovanych znamek
+				let znamky_sim = x[i][y].querySelectorAll('span.simulace');
+
+				for (z = 0; z < znamky_sim.length; z++)
+				{
+					if (znamky_sim[z].innerHTML != '-' && znamky_sim[z].innerHTML != null && znamky_sim[z].innerHTML != '[S]')
+					{
+						znamka += (parseFloat(znamky_sim[z].innerHTML.replace('-','.5')) * vaha);
 						temp += vaha;
 					}
 				}
