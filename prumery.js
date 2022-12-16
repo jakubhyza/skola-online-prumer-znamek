@@ -1,9 +1,14 @@
 let table;
-let y = [];
-let x = [];
+const y = [];
+const x = [];
+const HEADER_OFFSET = 2;
 
-function ZobrazitPrumer()
-{
+const IGNORED_COLUMNS = [
+	'Uz.',
+	'Celkový průměr'
+];
+
+function ZobrazitPrumer() {
 	//Uložení tabulky do promněných
 	table = document.querySelector('#G_ctl00xmainxCCADynamicUWGrid tbody');
 	y = table.querySelectorAll('tr');
@@ -11,180 +16,164 @@ function ZobrazitPrumer()
 	var nejlepsiPredmet = '{NULL}';
 	var nejlepsiPrumer = 5;
 
-	var nejhrosiPredmet = '{NULL}';
-	var nejhrosiPrumer = 0;
+	var nejhorsiPredmet = '{NULL}';
+	var nejhorsiPrumer = 0;
 
 	var GlobalPrumer = 0;
 	var GlobalTemp = 0;
 
-	for (i = 0; i < y.length; i++)
-	{
+	for (i = 0; i < y.length; i++) {
 		x[i] = y[i].querySelectorAll('td');
 	}
-	
+
 	//Vypsání vah známek
 	x[0][0].innerHTML = 'Typ hodnocení:';
 	x[1][0].innerHTML = 'Váha hodnocení:';
-	for (i = 0; i < x[0].length; i++)
-	{
-		
-		if (x[0][i].innerHTML != 'Uz.' && x[0][i].getAttribute('title') != null)
-			x[1][i].innerHTML = x[0][i].getAttribute('title').replace('Váha[','').replace(']','').replace(',','.');
+	for (i = 0; i < x[0].length; i++) {
+		if (!IGNORED_COLUMNS.includes(x[0][i].innerHTML) && x[0][i].title !== null) {
+			x[1][i].innerHTML = x[0][i].title.replace('Váha[','').replace(']','').replace(',','.');
+		}
 	}
-	
+
 	//výpočet
-	
-	for (i = 3; i < x.length; i++)
-	{
+	for (i = 3; i < x.length; i++) {
 		let znamka = 0;
 		let temp = 0;
-		for (y = 1; y < x[i].length; y++)
-		{
-			if (x[0][y].innerHTML != 'Uz.')
-			{
-				let vaha = parseFloat(x[1][y].innerHTML);
-				let title = x[i][y].title;
+		for (y = 1; y < x[i].length; y++) {
+			if (IGNORED_COLUMNS.includes([0][y].innerHTML)) {
+				continue;
+			}
 
-				// zpracovani znamek v "title" bunky
-				let znamky = title.trim().split(" ");
+			let vaha = parseFloat(x[1][y].innerHTML);
+			let title = x[i][y].title;
 
-				if (title == null || title.trim() == '')
-					znamky = [];
+			// zpracovani znamek v "title" bunky
+			let znamky = title.trim().split(" ");
 
-				for (z = 0; z < znamky.length; z++)
-				{
-					if (znamky[z] != '-' && znamky[z] != null && znamky[z] != '[S]')
-					{
-						znamka += (parseFloat(znamky[z].replace('-','.5')) * vaha);
-						temp += vaha;
-					}
+			if (title === null || title.trim() === '')
+				znamky = [];
+
+			for (z = 0; z < znamky.length; z++)	{
+				if (znamky[z] !== '-' && znamky[z] !== null && znamky[z] !== '[S]') {
+					znamka += (parseFloat(znamky[z].replace('-','.5')) * vaha);
+					temp += vaha;
 				}
+			}
 
-				// zpracovani simulovanych znamek
-				let znamky_sim = x[i][y].querySelectorAll('span.simulace');
+			// zpracovani simulovanych znamek
+			let znamky_sim = x[i][y].querySelectorAll('span.simulace');
 
-				for (z = 0; z < znamky_sim.length; z++)
-				{
-					if (znamky_sim[z].innerHTML != '-' && znamky_sim[z].innerHTML != null && znamky_sim[z].innerHTML != '[S]')
-					{
-						znamka += (parseFloat(znamky_sim[z].innerHTML.replace('-','.5')) * vaha);
-						temp += vaha;
-					}
+			for (z = 0; z < znamky_sim.length; z++)	{
+				if (znamky_sim[z].innerHTML !== '-' && znamky_sim[z].innerHTML !== null && znamky_sim[z].innerHTML !== '[S]') {
+					znamka += (parseFloat(znamky_sim[z].innerHTML.replace('-','.5')) * vaha);
+					temp += vaha;
 				}
 			}
 		}
-		
+
 		//Zobrazení
-		if (znamka != 0 && temp != 0)
+		if (znamka !== 0 && temp !== 0) {
 			znamka = znamka / temp;
+		}
 
-		if (znamka < 1)
-			color = '808080';
-		else if (znamka < 1.5)
-			color = '00800d';
-		else if (znamka < 2.5)
-			color = '00E91C';
-		else if (znamka < 3.5)
-			color = 'FFD800';
-		else if (znamka < 4.5)
-			color = 'ff6000';
-		else
-			color = 'FF0000';
+		const colors = {
+			1: '808080',
+			1.5: '00800d',
+			2.5: '00E91C',
+			3.5: 'FFD800',
+			4.5: 'ff6000',
+		};
 
-		x[i][0].innerHTML = ' <span class="prumer" style="color: #' + color + '">[' + znamka.toFixed(2) + ']</span> '  + x[i][0].getAttribute('title');
+		color = 'FF0000';
+		for(const [meze, barva] of Object.entries(colors)) {
+			if (znamka < meze) {
+				color = barva;
+				break;
+			}
+		}
+
+		x[i][0].innerHTML = ' <span class="prumer" style="color: #' + color + '">[' + znamka.toFixed(2) + ']</span> '  + x[i][0].title;
 
 		//Statistiky
-		if (znamka <= nejlepsiPrumer && znamka >= 1)
-		{
+		if (znamka <= nejlepsiPrumer && znamka >= 1) {
 			nejlepsiPrumer = znamka;
-			nejlepsiPredmet = x[i][0].getAttribute('title');
-		}
-		if (znamka >= nejhrosiPrumer || znamka == 5)
-		{
-			nejhrosiPrumer = znamka;
-			nejhrosiPredmet = x[i][0].getAttribute('title');
+			nejlepsiPredmet = x[i][0].title;
 		}
 
-		GlobalPrumer += (znamka.toFixed(0) - 0);
+		if (znamka >= nejhorsiPrumer || znamka === 5) {
+			nejhorsiPrumer = znamka;
+			nejhorsiPredmet = x[i][0].title;
+		}
+
+		GlobalPrumer += Math.round(znamka);
 		GlobalTemp++;
 	}
 
 	//Zobrazit statistiky
-	document.querySelector('.labInfo').innerText = "Nejlepší známku máš z "+nejlepsiPredmet+"\nNejhorší známku máš z "+nejhrosiPredmet;
+	document.querySelector('.labInfo').innerText = "Nejlepší známku máš z "+nejlepsiPredmet+"\nNejhorší známku máš z "+nejhorsiPredmet;
 
-	if (GlobalTemp != 0)
-			GlobalPrumer = GlobalPrumer / GlobalTemp;
+	if (GlobalTemp != 0) {
+		GlobalPrumer = GlobalPrumer / GlobalTemp;
+	}
 
-	if (GlobalPrumer < 1.5)
-	{
+	if (GlobalPrumer < 1.5)	{
 		document.querySelector('.labInfo').innerText += "\nPrůměr ti vychází na vyznamenání ("+GlobalPrumer.toFixed(2)+")";
 
-		if (nejhrosiPrumer >= 2.5)
-			document.querySelector('.labInfo').innerText += ", ale kazí ti to " + nejhrosiPredmet;
-		else
+		if (nejhorsiPrumer >= 2.5) {
+			document.querySelector('.labInfo').innerText += ", ale kazí ti to " + nejhorsiPredmet;
+		} else {
 			document.querySelector('.labInfo').innerText += "!";
-	}
-	else
-		document.querySelector('.labInfo').innerText += '\nCelkový průměr (' + GlobalPrumer.toFixed(2) + ')';
-
-	console.log(GlobalPrumer);
-
-}
-
-function sim()
-{
-	let string = 'Zvolte číslo předmětu:';
-	for (i = 2; i < x.length; i++)
-	{
-		string += '\n[' + (i - 2) + '] ' + x[i][0].getAttribute('title');
-	}
-	let predmet = prompt(string);
-	if (!isNaN(predmet))
-	{
-		predmet = parseInt(predmet);
-		predmet += 2;
-		if (predmet >= 2 && predmet <= x.length - 1)
-		{
-			string = 'Zvolte sekci:';
-			for (i = 1; i < x[0].length - 2; i++)
-			{
-				if (x[0][i].innerHTML != 'Uz.')
-					string += '\n[' + i + '] ' + x[0][i].innerHTML;
-			}
-			let sekce = prompt(string);
-			if (!isNaN(sekce))
-			{
-				if (sekce >= 1 && sekce <= x[0].length)
-				{
-					let z = prompt('Zvolte známku');
-					if (!isNaN(z))
-					{
-						if (z > 0 && z < 6)
-						{
-							x[predmet][sekce].innerHTML += '<span title="Simulovaná známka\nKliknutím známku odstraníte." class="simulace" onclick="this.remove(); document.querySelector(\'#rfrsh\').click();">' + z + '</span>';
-							ZobrazitPrumer();
-						}
-						else
-							alert('Neplatná známka');
-					}
-					else
-						alert('Neplatný vstup');
-				}
-				else
-					alert('Tato sekce neexistuje');
-			}
-			else
-				alert('Neplatný vstup');
 		}
-		else
-			alert('Tento předmět neexistuje !');
+	} else {
+		document.querySelector('.labInfo').innerText += '\nCelkový průměr (' + GlobalPrumer.toFixed(2) + ')';
 	}
-	else
-		alert('Chybný vstup !');
+
+	//console.log(GlobalPrumer); // Debug info
 }
 
-if (window.location.href.includes('HodnVypisStud'))
-{
+function sim() {
+	let string = 'Zvolte číslo předmětu:';
+	for (i = 2; i < x.length; i++) {
+		string += '\n[' + (i - 2) + '] ' + x[i][0].title;
+	}
+
+	let predmet = parseInt(prompt(string));
+	if (isNaN(predmet)) {
+		return alert('Chybný vstup !');
+	}
+	if (predmet < 1 || predmet > x.length - 1) {
+		return alert('Tento předmět neexistuje !');
+	}
+	predmet += HEADER_OFFSET;
+
+	string = 'Zvolte sekci:';
+	for (i = 1; i < x[0].length - 2; i++) {
+		if (!IGNORED_COLUMNS.includes(x[0][i].innerHTML)) {
+			string += '\n[' + i + '] ' + x[0][i].innerHTML;
+		}
+	}
+
+	let sekce = prompt(string);
+	if (isNaN(sekce)) {
+		return alert('Neplatný vstup');
+	}
+	if (sekce < 1 || sekce > x[0].length) {
+		return alert('Tato sekce neexistuje');
+	}
+
+	let z = prompt('Zvolte známku');
+	if (isNaN(z)) {
+		return alert('Neplatný vstup');
+	}
+	if (z < 1 || z > 5) {
+		return alert('Neplatná známka');
+	}
+
+	x[predmet][sekce].innerHTML += '<span title="Simulovaná známka\nKliknutím známku odstraníte." class="simulace" onclick="this.remove(); document.querySelector(\'#rfrsh\').click();">' + z + '</span>';
+	ZobrazitPrumer();
+}
+
+if (window.location.href.includes('HodnVypisStud')) {
 	document.querySelector('.sol-btn-panel').innerHTML += '<br><span class="labInfo"></span><br><span class="btnSimulace"><a>Simulovat známky</a></span><span id="rfrsh" style="display: none;">X</span><br><br><a href="https://github.com/jakubhyza/skola-online-prumer-znamek" target="_blank">GitHub průměru známek</a>';
 	document.querySelector('.btnSimulace').onclick = sim;
 	document.querySelector('#rfrsh').onclick = ZobrazitPrumer;
