@@ -1,5 +1,5 @@
 let table;
-const y = [];
+let y = [];
 const x = [];
 const HEADER_OFFSET = 2;
 
@@ -40,7 +40,7 @@ function ZobrazitPrumer() {
 		let znamka = 0;
 		let temp = 0;
 		for (y = 1; y < x[i].length; y++) {
-			if (IGNORED_COLUMNS.includes([0][y].innerHTML)) {
+			if (IGNORED_COLUMNS.includes(x[0][y].innerHTML)) {
 				continue;
 			}
 
