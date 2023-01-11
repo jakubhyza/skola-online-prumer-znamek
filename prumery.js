@@ -8,6 +8,12 @@ const IGNORED_COLUMNS = [
 	'Celkový průměr'
 ];
 
+const IGNORED_SPECIAL_MARKS = [
+	'-',
+	'[S]',
+	'x',
+];
+
 function ZobrazitPrumer() {
 	//Uložení tabulky do promněných
 	table = document.querySelector('#G_ctl00xmainxCCADynamicUWGrid tbody');
@@ -54,20 +60,27 @@ function ZobrazitPrumer() {
 				znamky = [];
 
 			for (z = 0; z < znamky.length; z++)	{
-				if (znamky[z] !== '-' && znamky[z] !== null && znamky[z] !== '[S]') {
-					znamka += (parseFloat(znamky[z].replace('-','.5')) * vaha);
-					temp += vaha;
+				if (!znamky[z]) {
+					continue;
 				}
+				if (IGNORED_SPECIAL_MARKS.includes(znamky[z])) {
+					continue;
+				}
+
+				znamka += (parseFloat(znamky[z].replace('-','.5')) * vaha);
+				temp += vaha;
 			}
 
 			// zpracovani simulovanych znamek
 			let znamky_sim = x[i][y].querySelectorAll('span.simulace');
 
 			for (z = 0; z < znamky_sim.length; z++)	{
-				if (znamky_sim[z].innerHTML !== '-' && znamky_sim[z].innerHTML !== null && znamky_sim[z].innerHTML !== '[S]') {
-					znamka += (parseFloat(znamky_sim[z].innerHTML.replace('-','.5')) * vaha);
-					temp += vaha;
+				if (IGNORED_SPECIAL_MARKS.includes(znamky_sim[z])) {
+					continue;
 				}
+				
+				znamka += (parseFloat(znamky_sim[z].innerHTML.replace('-','.5')) * vaha);
+				temp += vaha;
 			}
 		}
 
