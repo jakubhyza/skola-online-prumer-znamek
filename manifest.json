@@ -1,10 +1,10 @@
 {
   "name": "Průměr známek - Škola online, DM Software",
-  "version": "5.0",
+  "version": "5.1",
   "manifest_version": 2,
   "description": "Plugin umí zobrazit průměr známek v systémech Škola Online a DM Software",
   "homepage_url": "https://aplikace.skolaonline.cz/",
-  
+
   "browser_action": {
     "default_title": "Průměr známek",
     "default_icon": "logo.png"
@@ -12,8 +12,14 @@
 
   "content_scripts": [
     {
-      "matches": ["https://aplikace.skolaonline.cz/*","https://skola.plzen-edu.cz/*","https://aplikace.dmsoftware.cz/*"],
-      "js":["prumery.js"],
+      "matches": [
+        "https://aplikace.skolaonline.cz/*",
+        "https://skola.plzen-edu.cz/*",
+        "https://aplikace.dmsoftware.cz/*"
+      ],
+      "js": [
+        "prumery.js"
+      ],
       "run_at": "document_end"
     }],
 

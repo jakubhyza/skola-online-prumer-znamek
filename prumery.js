@@ -67,7 +67,7 @@ function ZobrazitPrumer() {
 					continue;
 				}
 
-				znamka += (parseFloat(znamky[z].replace('-','.5')) * vaha);
+				znamka += (parseFloat(znamky[z].replace(',','.')) * vaha);
 				temp += vaha;
 			}
 
@@ -78,8 +78,8 @@ function ZobrazitPrumer() {
 				if (IGNORED_SPECIAL_MARKS.includes(znamky_sim[z])) {
 					continue;
 				}
-				
-				znamka += (parseFloat(znamky_sim[z].innerHTML.replace('-','.5')) * vaha);
+
+				znamka += (parseFloat(znamky_sim[z].innerHTML.replace(',','.')) * vaha);
 				temp += vaha;
 			}
 		}
