@@ -1,15 +1,9 @@
 {
-  "name": "Průměr známek - Škola online, DM Software",
-  "version": "5.1",
-  "manifest_version": 2,
-  "description": "Plugin umí zobrazit průměr známek v systémech Škola Online a DM Software",
+  "name": "Pr\u0139\u017bm\u00c4\u203ar zn\u0102\u02c7mek - \u0139\u00a0kola online, DM Software",
+  "version": "5.2",
+  "manifest_version": 3,
+  "description": "Plugin um\u0102\u00ad zobrazit pr\u0139\u017bm\u00c4\u203ar zn\u0102\u02c7mek v syst\u0102\u00a9mech \u0139\u00a0kola Online a DM Software",
   "homepage_url": "https://aplikace.skolaonline.cz/",
-
-  "browser_action": {
-    "default_title": "Průměr známek",
-    "default_icon": "logo.png"
-  },
-
   "content_scripts": [
     {
       "matches": [
@@ -21,16 +15,24 @@
         "prumery.js"
       ],
       "run_at": "document_end"
-    }],
-
-  "icons":{
+    }
+  ],
+  "icons": {
     "128": "logo.png"
   },
-
-
   "permissions": [
-	"https://aplikace.skolaonline.cz/*",
-	"https://skola.plzen-edu.cz/*",
-	"https://aplikace.dmsoftware.cz/*"
+    "https://aplikace.skolaonline.cz/*",
+    "https://skola.plzen-edu.cz/*",
+    "https://aplikace.dmsoftware.cz/*"
+  ],
+  "action": {
+    "default_title": "Pr\u0139\u017bm\u00c4\u203ar zn\u0102\u02c7mek",
+    "default_icon": "logo.png"
+  },
+  "content_security_policy": {},
+  "host_permissions": [
+    "https://aplikace.skolaonline.cz/*",
+    "https://skola.plzen-edu.cz/*",
+    "https://aplikace.dmsoftware.cz/*"
   ]
 }
