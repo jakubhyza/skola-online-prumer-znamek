@@ -1,8 +1,8 @@
 {
-  "name": "Pr\u0139\u017bm\u00c4\u203ar zn\u0102\u02c7mek - \u0139\u00a0kola online, DM Software",
+  "name": "Průměr známek - škola online, DM Software",
   "version": "5.2",
   "manifest_version": 3,
-  "description": "Plugin um\u0102\u00ad zobrazit pr\u0139\u017bm\u00c4\u203ar zn\u0102\u02c7mek v syst\u0102\u00a9mech \u0139\u00a0kola Online a DM Software",
+  "description": "Plugin umí zobrazit prlměr známek v systémech škola Online a DM Software",
   "homepage_url": "https://aplikace.skolaonline.cz/",
   "content_scripts": [
     {
@@ -26,7 +26,7 @@
     "https://aplikace.dmsoftware.cz/*"
   ],
   "action": {
-    "default_title": "Pr\u0139\u017bm\u00c4\u203ar zn\u0102\u02c7mek",
+    "default_title": "Pr\u0139\u017bměr známek",
     "default_icon": "logo.png"
   },
   "content_security_policy": {},
