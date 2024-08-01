@@ -20,11 +20,6 @@
   "icons": {
     "128": "logo.png"
   },
-  "permissions": [
-    "https://aplikace.skolaonline.cz/*",
-    "https://skola.plzen-edu.cz/*",
-    "https://aplikace.dmsoftware.cz/*"
-  ],
   "action": {
     "default_title": "Pr\u0139\u017bměr známek",
     "default_icon": "logo.png"
